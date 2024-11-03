@@ -3,22 +3,21 @@ import { User } from '../models/user';
 import { Transaction } from '../models/transaction';
 
 export class TransactionService{
-  public async addFunds(fromUserId: number, amount: number) {
+  public async addFunds(userId: number, amount: number) {
 
   }
 
-  public async withdrawFunds(fromUserId: number, amount: number) {
+  public async withdrawFunds(userId: number, amount: number) {
 
   }
 
   public async getTransactions() {
     const transactions = await db<Transaction>('transactions').select('*');
     return transactions;
-}
+  }
 
   
   public async transferFunds(senderId: number, receiverId: number, amount: number) {
-
     try {
       await db.transaction(async trx => {
         // Lock the sender's row for update

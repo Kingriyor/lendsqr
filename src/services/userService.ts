@@ -2,11 +2,6 @@ import db from '../db/db';
 import { User } from '../models/user';
 
 
-interface ApiResponse {
-    success: boolean;
-    data: User[];
-}
-
 export class UserService{
     public async createUser(name: string, email: string) {
         return await db<User>('users').insert({ name, email });
