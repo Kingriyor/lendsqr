@@ -9,6 +9,7 @@ const userService = new UserService();
 const transactionsService = new TransactionService();
 
 // TODO validate endpoint inputs
+// A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
 
 export class UserController{
 
@@ -203,6 +204,74 @@ export class UserController{
       const response: ApiResponse<null> = {
         success: false,
         message: 'Error Transfering funds',
+        data: null,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+      res.status(500).json(response);
+    }
+  }
+
+  public async depositFunds(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, amount } = req.body;
+      if (!userId || !amount || amount <= 0) {
+        const response: ApiResponse<null> = {
+          success: false,
+          message: 'Invalid input',
+          data: null,
+          error: "",
+        };
+        res.status(400).json(response);
+      }else{
+        const feedback = await transactionsService.depositFunds(userId, amount);
+
+        const response: ApiResponse<typeof feedback> = {
+          success: true,
+          message: 'Deposit Successful',
+          data: feedback,
+          error: ""
+        };
+        res.status(201).json(response);
+      }
+    }
+    catch (error) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Error Depositing funds',
+        data: null,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+      res.status(500).json(response);
+    }
+  }
+
+  public async withdrawFunds(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, amount } = req.body;
+      if (!userId || !amount || amount <= 0) {
+        const response: ApiResponse<null> = {
+          success: false,
+          message: 'Invalid input',
+          data: null,
+          error: "",
+        };
+        res.status(400).json(response);
+      }else{
+        const feedback = await transactionsService.withdrawFunds(userId, amount);
+
+        const response: ApiResponse<typeof feedback> = {
+          success: true,
+          message: 'Withdrawal Successful',
+          data: feedback,
+          error: ""
+        };
+        res.status(201).json(response);
+      }
+    }
+    catch (error) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Error Withdrawing funds',
         data: null,
         error: error instanceof Error ? error.message : 'Unknown error',
       };

@@ -28,5 +28,10 @@ router.delete('/users/:id', authenticateToken, userController.deleteUser);
 // transfer funds
 router.post('/users/transfer', authenticateToken, userController.transferFunds);
 
+// withdraw funds
+router.post('/users/withdraw', authenticateToken, userController.withdrawFunds);
+
+// deposit funds
+router.post('/users/deposit', authenticateToken, userController.depositFunds);
 
 export default router;
