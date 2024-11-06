@@ -8,8 +8,10 @@ import { ApiResponse } from '../models/ApiResponse';
 const userService = new UserService();
 const transactionsService = new TransactionService();
 
-// TODO validate endpoint inputs
-// A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
+// TODO A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
+// TODO tests
+// TODO readme and documentation
+// TODO E-R Diagram
 
 export class UserController{
 
@@ -179,8 +181,8 @@ export class UserController{
 
   public async transferFunds(req: Request, res: Response): Promise<void> {
     try {
-      const { fromUserId, toUserId, amount } = req.body;
-      if (!fromUserId || !toUserId || !amount || amount <= 0) {
+      const { senderUserId, receiverUserId, amount } = req.body;
+      if (!senderUserId || !receiverUserId || !amount || amount <= 0) {
         const response: ApiResponse<null> = {
           success: false,
           message: 'Invalid input',
@@ -189,7 +191,7 @@ export class UserController{
         };
         res.status(400).json(response);
       }else{
-        const feedback = await transactionsService.transferFunds(fromUserId, toUserId, amount);
+        const feedback = await transactionsService.transferFunds(senderUserId, receiverUserId, amount);
 
         const response: ApiResponse<typeof feedback> = {
           success: true,

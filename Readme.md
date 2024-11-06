@@ -195,15 +195,15 @@ If you need to perform multiple database operations that should be treated as a 
 
 import db from '../db';
 
-async function transferFunds(fromUserId: number, toUserId: number, amount: number) {
+async function transferFunds(senderUserId: number, receiverUserId: number, amount: number) {
   const trx = await db.transaction();
 
   try {
     // Deduct amount from sender
-    await trx('users').where('id', fromUserId).decrement('balance', amount);
+    await trx('users').where('id', senderUserId).decrement('balance', amount);
 
     // Add amount to receiver
-    await trx('users').where('id', toUserId).increment('balance', amount);
+    await trx('users').where('id', receiverUserId).increment('balance', amount);
 
     // Commit the transaction
     await trx.commit();
@@ -276,3 +276,9 @@ Step 5: Run Your Tests
 You can now run your tests using the Jest command:
 
 ``` npx jest ```
+
+
+
+### Working Assumptions
+1) One currency
+2) User's BVN validation and other KYC is handled

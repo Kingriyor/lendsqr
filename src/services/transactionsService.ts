@@ -89,14 +89,13 @@ export class TransactionService{
     const transactions = await db<Transaction>('transactions').select('*');
     return transactions;
   }
-
   
-  public async transferFunds(senderId: number, receiverId: number, amount: number) {
+  public async transferFunds(senderUserId: number, receiverUserId: number, amount: number) {
     try {
       await db.transaction(async trx => {
         // Lock the sender's row for update
         const sender = await trx('users')
-          .where('id', senderId)
+          .where('id', senderUserId)
           .select('id', 'account_balance', 'bvn')
           .forUpdate()
           .first();
@@ -115,7 +114,7 @@ export class TransactionService{
   
         // Lock the receiver's row for update
         const receiver = await trx('users')
-          .where('id', receiverId)
+          .where('id', receiverUserId)
           .select('id', 'account_balance', 'bvn')
           .forUpdate()
           .first();
@@ -129,25 +128,25 @@ export class TransactionService{
         }
 
         // Debit sender's account
-        await trx('users').where('id', senderId).decrement('account_balance', amount);
+        await trx('users').where('id', senderUserId).decrement('account_balance', amount);
 
         // Credit receiver's account
-        await trx('users').where('id', receiverId).increment('account_balance', amount);
+        await trx('users').where('id', receiverUserId).increment('account_balance', amount);
   
         // log the transaction (for audit purposes)
         await trx('transactions').insert({
-          user_id: senderId,
+          user_id: senderUserId,
           amount,
           transaction_type: 'debit',
-          metadata: JSON.stringify({ description: 'Transfer', details: { senderId,  receiverId} }),
+          metadata: JSON.stringify({ description: 'Transfer', details: { senderUserId,  receiverUserId} }),
           created_at: new Date(),
         });
 
         await trx('transactions').insert({
-          user_id: receiverId,
+          user_id: receiverUserId,
           amount,
           transaction_type: 'credit',
-          metadata: JSON.stringify({ description: 'Transfer', details: { senderId,  receiverId} }),
+          metadata: JSON.stringify({ description: 'Transfer', details: { senderUserId,  receiverUserId} }),
           created_at: new Date(),
         });
 
