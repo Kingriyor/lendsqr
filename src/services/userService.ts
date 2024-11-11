@@ -4,7 +4,7 @@ import { User } from '../models/user';
 
 export class UserService{
     public async createUser(name: string, email: string) {
-        return await db<User>('users').insert({ name, email });
+        return await db<User>('users').insert({ name, email }).returning('*');;
     }
 
     public async getUsers() {
@@ -24,7 +24,7 @@ export class UserService{
     }
 
     public async deleteUser(id: number) {
-        const user = await db('users').where({ id }).del();
+        const user = await db('users').where({ id }).del().returning('*');;
         return user;
     }
     
