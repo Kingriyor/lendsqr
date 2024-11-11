@@ -134,6 +134,7 @@ curl -X POST http://localhost:4000/api/account -H "Authorization: Bearer <fauxSe
   "amount": 1000
 }'
 
+Postman collection "Lendersqr.postman_collection.json" can be imported into your postman to see calls and examples
 
 Testing
 

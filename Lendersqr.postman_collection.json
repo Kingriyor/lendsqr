@@ -1,0 +1,1044 @@
+{
+	"info": {
+		"_postman_id": "edc75de7-3ad3-4672-9fd5-9e1fc8617c49",
+		"name": "Lendersqr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2782204"
+	},
+	"item": [
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "Get Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"transactions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Transactions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/transactions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"transactions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "800"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"320-pfjMCu5NfGpyd09Qt8K8z58QbW4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:01:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transactions fetched\",\n    \"data\": [\n        {\n            \"id\": 27,\n            \"amount\": \"10.00\",\n            \"user_id\": 19,\n            \"transaction_type\": \"debit\",\n            \"created_at\": \"2024-11-11T07:56:52.753Z\",\n            \"metadata\": {\n                \"description\": \"Transfer\",\n                \"details\": {\n                    \"senderUserId\": 19,\n                    \"receiverUserId\": 20\n                }\n            }\n        },\n        {\n            \"id\": 28,\n            \"amount\": \"10.00\",\n            \"user_id\": 20,\n            \"transaction_type\": \"credit\",\n            \"created_at\": \"2024-11-11T07:56:52.754Z\",\n            \"metadata\": {\n                \"description\": \"Transfer\",\n                \"details\": {\n                    \"senderUserId\": 19,\n                    \"receiverUserId\": 20\n                }\n            }\n        },\n        {\n            \"id\": 29,\n            \"amount\": \"20.00\",\n            \"user_id\": 20,\n            \"transaction_type\": \"debit\",\n            \"created_at\": \"2024-11-11T08:00:57.712Z\",\n            \"metadata\": {\n                \"description\": \"Withdrawal\",\n                \"details\": {\n                    \"userId\": 20\n                }\n            }\n        },\n        {\n            \"id\": 30,\n            \"amount\": \"10.00\",\n            \"user_id\": 20,\n            \"transaction_type\": \"credit\",\n            \"created_at\": \"2024-11-11T08:01:12.382Z\",\n            \"metadata\": {\n                \"description\": \"Deposit\",\n                \"details\": {\n                    \"userId\": 20\n                }\n            }\n        }\n    ],\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "TransferFunds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senderUserId\": 19,\n    \"receiverUserId\": 20,\n    \"amount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"transfer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "TransferFunds error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"senderUserId\": 19,\n    \"receiverUserId\": 19,\n    \"amount\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/transfer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"transfer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"94-oS997Twi6JkqDJx16v+Lcfm0fDM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 07:56:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Invalid input\",\n    \"data\": null,\n    \"error\": \"Enter senderUserId, receiverUserId and amount where senderUserId != receiverUserId\"\n}"
+						},
+						{
+							"name": "TransferFunds",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"senderUserId\": 19,\n    \"receiverUserId\": 20,\n    \"amount\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/transfer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"transfer"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-JUND96F6MesAC+mDT8Yn6ZeWgq4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 07:56:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Transfer Successful\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Withdraw Funds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 4,\n    \"amount\": 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/withdraw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"withdraw"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Withdraw Funds",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 20,\n    \"amount\": 20\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/withdraw",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"withdraw"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-vlZMwRyg1ueDWOMSWMkmDt5FAW8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:00:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Withdrawal Successful\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Deposit Funds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 3,\n    \"amount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"deposit"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Deposit Funds",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 20,\n    \"amount\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/deposit",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"deposit"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-Om5ENdMZ07CyQIra2vDUHbLfr8A\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:01:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Deposit Successful\",\n    \"error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1437"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"59d-V2X6c2zxNeU2MLfbnQsVwX/okNU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 07:51:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Users fetched\",\n    \"data\": [\n        {\n            \"id\": 19,\n            \"name\": \"Alice Doe\",\n            \"email\": \"alice@example.com\",\n            \"created_at\": \"2024-11-11T07:51:32.858Z\",\n            \"updated_at\": \"2024-11-11T07:51:32.858Z\",\n            \"phone_number\": null,\n            \"bvn\": \"31234567890\",\n            \"bvn_phone_number\": null,\n            \"date_of_birth\": null,\n            \"age\": null,\n            \"gender\": null,\n            \"account_number\": null,\n            \"account_balance\": \"100.00\",\n            \"activated\": true,\n            \"activated_on\": null,\n            \"blacklisted\": false,\n            \"created_on\": \"2024-11-11T07:51:32.858Z\",\n            \"modified_on\": \"2024-11-11T07:51:32.858Z\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Bob Doe\",\n            \"email\": \"bob@example.com\",\n            \"created_at\": \"2024-11-11T07:51:32.858Z\",\n            \"updated_at\": \"2024-11-11T07:51:32.858Z\",\n            \"phone_number\": null,\n            \"bvn\": \"41234567890\",\n            \"bvn_phone_number\": null,\n            \"date_of_birth\": null,\n            \"age\": null,\n            \"gender\": null,\n            \"account_number\": null,\n            \"account_balance\": \"100.00\",\n            \"activated\": true,\n            \"activated_on\": null,\n            \"blacklisted\": false,\n            \"created_on\": \"2024-11-11T07:51:32.858Z\",\n            \"modified_on\": \"2024-11-11T07:51:32.858Z\"\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Ado John Sule\",\n            \"email\": \"Ado@lendsqr.com\",\n            \"created_at\": \"2024-11-11T07:51:32.858Z\",\n            \"updated_at\": \"2024-11-11T07:51:32.858Z\",\n            \"phone_number\": \"07062569817\",\n            \"bvn\": \"21234567890\",\n            \"bvn_phone_number\": \"08012345678\",\n            \"date_of_birth\": \"1990-09-09T23:00:00.000Z\",\n            \"age\": 26,\n            \"gender\": \"Female\",\n            \"account_number\": \"IDR000047197\",\n            \"account_balance\": \"1144.25\",\n            \"activated\": true,\n            \"activated_on\": \"2021-02-01T10:15:08.000Z\",\n            \"blacklisted\": false,\n            \"created_on\": \"2024-11-11T07:51:32.858Z\",\n            \"modified_on\": \"2024-11-11T07:51:32.858Z\"\n        }\n    ],\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "getUser by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"19"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getUser by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/19",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"19"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "493"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ed-8zm73PiyRG1b5uNYChzGIvtH9Lw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 07:52:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User fetched\",\n    \"data\": {\n        \"id\": 19,\n        \"name\": \"Alice Doe\",\n        \"email\": \"alice@example.com\",\n        \"created_at\": \"2024-11-11T07:51:32.858Z\",\n        \"updated_at\": \"2024-11-11T07:51:32.858Z\",\n        \"phone_number\": null,\n        \"bvn\": \"31234567890\",\n        \"bvn_phone_number\": null,\n        \"date_of_birth\": null,\n        \"age\": null,\n        \"gender\": null,\n        \"account_number\": null,\n        \"account_balance\": \"100.00\",\n        \"activated\": true,\n        \"activated_on\": null,\n        \"blacklisted\": false,\n        \"created_on\": \"2024-11-11T07:51:32.858Z\",\n        \"modified_on\": \"2024-11-11T07:51:32.858Z\"\n    },\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"999"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/26",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"26"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "481"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e1-j2gwhhu9IWmkX0YQdGGibT9qqgg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:19:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User Deleted\",\n    \"data\": {\n        \"id\": 26,\n        \"name\": \"John Doe\",\n        \"email\": \"jddd@example.com\",\n        \"created_at\": \"2024-11-11T08:19:07.824Z\",\n        \"updated_at\": \"2024-11-11T08:19:07.824Z\",\n        \"phone_number\": null,\n        \"bvn\": null,\n        \"bvn_phone_number\": null,\n        \"date_of_birth\": null,\n        \"age\": null,\n        \"gender\": null,\n        \"account_number\": null,\n        \"account_balance\": \"0.00\",\n        \"activated\": false,\n        \"activated_on\": null,\n        \"blacklisted\": false,\n        \"created_on\": \"2024-11-11T08:19:07.824Z\",\n        \"modified_on\": \"2024-11-11T08:19:07.824Z\"\n    },\n    \"error\": \"\"\n}"
+						},
+						{
+							"name": "delete user error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/26",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"26"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"43-TDnI09tp0kEW1dhXUp8vhsPaIRI\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:22:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"User not found\",\n    \"data\": null,\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bvn\": \"22345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bvn\": \"42345673\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/19",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"19"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "490"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ea-eSicJSaeAFzPEOp5xjYtpc3gRA8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 07:53:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User Updated\",\n    \"data\": {\n        \"id\": 19,\n        \"name\": \"Alice Doe\",\n        \"email\": \"alice@example.com\",\n        \"created_at\": \"2024-11-11T07:51:32.858Z\",\n        \"updated_at\": \"2024-11-11T07:51:32.858Z\",\n        \"phone_number\": null,\n        \"bvn\": \"42345673\",\n        \"bvn_phone_number\": null,\n        \"date_of_birth\": null,\n        \"age\": null,\n        \"gender\": null,\n        \"account_number\": null,\n        \"account_balance\": \"100.00\",\n        \"activated\": true,\n        \"activated_on\": null,\n        \"blacklisted\": false,\n        \"created_on\": \"2024-11-11T07:51:32.858Z\",\n        \"modified_on\": \"2024-11-11T07:51:32.858Z\"\n    },\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "fauxSecret123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\", \n    \"email\": \"jd@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\", \n    \"email\": \"jddd@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "481"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e1-eeEFKMvVA78uRKBZKxtVUPgQSlQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 08:09:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User Created\",\n    \"data\": {\n        \"id\": 25,\n        \"name\": \"John Doe\",\n        \"email\": \"jddd@example.com\",\n        \"created_at\": \"2024-11-11T08:09:16.350Z\",\n        \"updated_at\": \"2024-11-11T08:09:16.350Z\",\n        \"phone_number\": null,\n        \"bvn\": null,\n        \"bvn_phone_number\": null,\n        \"date_of_birth\": null,\n        \"age\": null,\n        \"gender\": null,\n        \"account_number\": null,\n        \"account_balance\": \"0.00\",\n        \"activated\": false,\n        \"activated_on\": null,\n        \"blacklisted\": false,\n        \"created_on\": \"2024-11-11T08:09:16.350Z\",\n        \"modified_on\": \"2024-11-11T08:09:16.350Z\"\n    },\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "getLendsqrUserData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{lendsqr key}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://adjutor.lendsqr.com/v2/data/users",
+							"protocol": "https",
+							"host": [
+								"adjutor",
+								"lendsqr",
+								"com"
+							],
+							"path": [
+								"v2",
+								"data",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "lendsqr key",
+			"value": "sk_live_PV72UaJQOzKyeQnF1WywTmEgkV0FouA3fWgQIQUG"
+		}
+	]
+}
