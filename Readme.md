@@ -48,7 +48,7 @@ Installation
 
 	1.	Clone this repository:
 
-git clone https://github.com/yourusername/lendsqr_wallet.git
+git clone https://github.com/Kingriyor/lendsqr.git
 cd lendsqr_wallet
 
 
@@ -57,7 +57,7 @@ cd lendsqr_wallet
 npm install
 
 
-	3.	Configure environment variables by creating a .env file based on sample.env:
+	3.	Configure environment variables by creating a .env file based on sample.env
 
 
 	4.	Set up the database by running migrations:
