@@ -14,7 +14,8 @@ Table of Contents
 	•	Testing
 	•	Technologies Used
 	•	Contributing
-    •	TODOs
+    •	E-R Diagram
+    •	Unfinished
 
 Features
 
@@ -161,12 +162,16 @@ Contributing
 	5.	Open a Pull Request.
 
 
-TODOs
+E-R Diagram
+
+![alt text](lendsqr.png)
+
+
+Unfinished
 - Name should be diviided into first, middle and Surname
-- A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
+- A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded. (Had some issues using the external API)
 - Debug and complete tests
-- E-R Diagram
-- add postman collection
+- More comprehensive E-R Diagram
 
 Working Assumptions
 - One currency
