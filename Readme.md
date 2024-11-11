@@ -61,7 +61,6 @@ npm install
 
 PORT=4000
 DATABASE_URL=your_database_url
-JWT_SECRET=your_jwt_secret
 ADJUTOR_KARMA_API_KEY=your_adjutor_api_key
 
 
@@ -85,7 +84,6 @@ Environment Setup
 Create a .env file in the root directory and configure the following environment variables:
 
 PORT=5000
-JWT_SECRET=<your_jwt_secret>
 
 MYSQLDB_USER=<root>
 MYSQLDB_ROOT_PASSWORD=<abc123456>
@@ -96,7 +94,6 @@ DATABASE_URL=<your_database_url>
 
 NODE_LOCAL_PORT=<port>
 NODE_DOCKER_PORT=<port>
-JWT_TOKEN_SALT=<secret_salt>
 
 DB_HOST=<127.0.0.1>
 DB_USER=<your_database_user>
