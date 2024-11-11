@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "seed": "knex seed:run --knexfile src/db/knexfile.ts"
   },
   "keywords": [],
   "author": "",
