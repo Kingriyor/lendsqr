@@ -1,284 +1,179 @@
-1) generate a migration file
-- knex migrate:make create_users_table --knexfile src/db/knexfile.ts --env development
+Lendsqr Wallet
 
-2) populate the migration file
+A backend service for a mobile lending app, providing essential wallet functionalities. The application is developed in Node.js with TypeScript and offers various financial transactions, including account creation, funding, transfers, withdrawals, and blacklist checks to prevent certain users from onboarding.
 
-3) run migration
-- knex migrate:latest --knexfile src/db/knexfile.ts --env development
+Table of Contents
 
+	•	Features
+	•	Architecture
+	•	Technologies Used
+	•	Installation
+	•	Environment Setup
+	•	Routes
+	•	Usage
+	•	Testing
+	•	Technologies Used
+	•	Contributing
+    •	TODOs
 
+Features
 
+	•	Account Creation: Users can create accounts with unique identifiers.
+	•	Account Funding: Users can fund their accounts.
+	•	Transfers: Allows users to transfer funds to other accounts.
+	•	Withdrawals: Supports withdrawals from user accounts.
+	•	Blacklist Checking: Blocks users on the Lendsqr Adjutor Karma blacklist from onboarding.
+	•	Authentication: Token-based authentication for secured endpoints.
+	•	Error Handling: Proper error responses for various scenarios.
 
-To set up a database in a TypeScript app using Knex.js, you can follow these steps:
+Architecture
 
-1. Install Knex and Database Client
+The app follows a layered architecture that includes:
 
-	•	Install knex and the database client you need (e.g., pg for PostgreSQL, mysql for MySQL, or sqlite3 for SQLite):
+	1.	Controller Layer: Manages request handling and responses.
+	2.	Service Layer: Contains business logic and transaction handling.
+	3.	Database Layer: Uses Knex.js for SQL queries.
 
-``` npm install knex ```
-``` npm install pg # or another client, like mysql or sqlite3 ```
+Technologies Used
 
+	•	Node.js and TypeScript for backend development
+	•	Express.js for building APIs
+	•	Knex.js for query building and database operations
+	•	Jest for testing
+	•	PostgreSQL as the database
+	•	Adjutor Karma API for blacklist checks
+	•	JWT for authentication
 
-	•	Also, install the type definitions for Knex and your database client:
+Installation
 
-``` npm install --save-dev @types/knex ```
+	1.	Clone this repository:
 
+git clone https://github.com/yourusername/lendsqr_wallet.git
+cd lendsqr_wallet
 
 
-2. Configure Knex
+	2.	Install dependencies:
 
-	•	Create a Knex configuration file to manage your database connections. This file typically lives at the root of your project in a file named knexfile.ts or src/knexfile.ts if you’re following a structured folder setup.
+npm install
 
-// src/knexfile.ts
-import { Knex } from 'knex';
 
-const config: { [key: string]: Knex.Config } = {
-  development: {
-    client: 'pg', // or 'mysql', 'sqlite3', etc.
-    connection: {
-      host: '127.0.0.1',
-      user: 'your_database_user',
-      password: 'your_database_password',
-      database: 'your_database_name'
-    },
-    migrations: {
-      directory: './src/migrations'
-    },
-    seeds: {
-      directory: './src/seeds'
-    }
-  },
-  production: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL, // Use environment variable for production
-    migrations: {
-      directory: './src/migrations'
-    },
-    seeds: {
-      directory: './src/seeds'
-    }
-  }
-};
+	3.	Configure environment variables by creating a .env file based on .env.example:
 
-export default config;
+PORT=4000
+DATABASE_URL=your_database_url
+JWT_SECRET=your_jwt_secret
+ADJUTOR_KARMA_API_KEY=your_adjutor_api_key
 
-3. Initialize Knex in the Application
 
-	•	Create a file to initialize Knex with the configuration, typically db.ts or src/db.ts.
+	4.	Set up the database by running migrations:
 
-// src/db.ts
-import Knex from 'knex';
-import knexConfig from './knexfile';
+npm run migrate
 
-const environment = process.env.NODE_ENV || 'development';
-const config = knexConfig[environment];
 
-const db = Knex(config);
+	5.	Seed the database if required:
 
-export default db;
+npm run seed
 
-4. Create Migration Files
 
-	•	Use Knex CLI commands to create migration files for defining your database schema.
-	•	First, install the Knex CLI globally if you haven’t already:
+	6.	Start the development server:
 
-``` npm install -g knex```
+npm run dev
 
 
-	•	Then, use the CLI to create a new migration:
+Environment Setup
 
-``` knex migrate:make create_users_table --knexfile src/knexfile.ts --env development ```
+Create a .env file in the root directory and configure the following environment variables:
 
+PORT=5000
+JWT_SECRET=<your_jwt_secret>
 
-	•	A migration file will be created in the migrations directory. Open the file and define the table schema:
+MYSQLDB_USER=<root>
+MYSQLDB_ROOT_PASSWORD=<abc123456>
+MYSQLDB_DATABASE=<lendsqr_db>
+MYSQLDB_LOCAL_PORT=<db_port>
 
+DATABASE_URL=<your_database_url>
 
-// src/migrations/{timestamp}_create_users_table.ts
-import { Knex } from 'knex';
+NODE_LOCAL_PORT=<port>
+NODE_DOCKER_PORT=<port>
+JWT_TOKEN_SALT=<secret_salt>
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable('users', (table) => {
-    table.increments('id').primary();
-    table.string('name').notNullable();
-    table.string('email').unique().notNullable();
-    table.timestamps(true, true);
-  });
-}
+DB_HOST=<127.0.0.1>
+DB_USER=<your_database_user>
+DB_PASSWORD=<your_database_password>
+DB_NAME=<db_name>
 
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTableIfExists('users');
-}
 
+Routes
 
+Here are the primary endpoints available in this API:
 
-5. Run Migrations
+User Routes
 
-	•	Run the migrations using the Knex CLI to create your tables:
+	•	GET /users: Fetch all users (requires authentication).
+	•	POST /users: Register a new user, with request validation (requires authentication).
+	•	GET /users/:id: Retrieve user details by ID (requires authentication).
+	•	PUT /users/:id: Update user information by ID, with validation (requires authentication).
+	•	DELETE /users/:id: Remove a user by ID (requires authentication).
 
-``` knex migrate:latest --knexfile src/knexfile.ts --env development ```
+Transaction Routes
 
+	•	GET /transactions: Retrieve transaction history (requires authentication).
+	•	POST /users/transfer: Transfer funds to another user, with validation (requires authentication).
+	•	POST /users/withdraw: Withdraw funds from user account, with validation (requires authentication).
+	•	POST /users/deposit: Deposit funds to user account, with validation (requires authentication).
 
+Middleware
 
-6. Use Knex in Your Application
+	•	Authentication: authenticateToken verifies user identity via JWT.
+	•	Validation: validateRequestBody applies schema validation using Joi for request body integrity.
 
-	•	Now, you can use db (exported from db.ts) in your application to query the database.
 
-// src/controllers/userController.ts
-import db from '../db';
+Usage
 
-export async function getUsers() {
-  return await db('users').select('*');
-}
+Once the server is running, you can use tools like Postman or cURL to interact with the API. Ensure that the token-based authentication is applied to secured endpoints.
 
-export async function createUser(name: string, email: string) {
-  return await db('users').insert({ name, email });
-}
+NB - Bearer token : fauxSecret123
 
-7. Typing Knex Queries (Optional)
+Sample Request
 
-	•	If you’d like to add TypeScript types for your Knex queries, you can define interfaces for your tables:
+curl -X POST http://localhost:4000/api/account -H "Authorization: Bearer <fauxSecret123>" -d '{
+  "amount": 1000
+}'
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  created_at: Date;
-  updated_at: Date;
-}
 
-export async function getUsers(): Promise<User[]> {
-  return await db<User>('users').select('*');
-}
+Testing
 
+To run tests:
 
-8. Running Seeds (Optional)
+npm run test
 
-Seeds are used to populate your database with sample data. Here’s how to create and run seed files using Knex.
+Tests are written using Jest and include unit tests for controllers and services.
 
-Step 1: Create a Seed File
+Technologies Used
 
-You can create a seed file using the Knex CLI. For example, to create a seed for users:
+	•	Node.js and Express: Backend server framework.
+	•	TypeScript: Strongly typed language for enhanced development.
+	•	Knex: SQL query builder for database operations.
+	•	Joi: Request validation middleware.
+	•	JWT: Authentication.
 
-``` knex seed:make seed_users --knexfile src/db/knexfile.ts --env development ```
+Contributing
 
-This command will create a new seed file in the src/seeds directory. The file will have a timestamp in its name.
+	1.	Fork the repository.
+	2.	Create a new feature branch (git checkout -b feature-name).
+	3.	Commit your changes (git commit -m 'Add new feature').
+	4.	Push to the branch (git push origin feature-name).
+	5.	Open a Pull Request.
 
-Step 2: Populate the Seed File
 
-Open the newly created seed file (e.g., src/seeds/{timestamp}_seed_users.ts) and define the data to insert:
+TODOs
+- names should be diviided into first, middle and Surname
+- A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
+- Debug and complete tests
+- E-R Diagram
+- add postman collection
 
-// src/seeds/{timestamp}_seed_users.ts
-import { Knex } from 'knex';
-
-export const seed = async (knex: Knex): Promise<void> => {
-  // Deletes ALL existing entries
-  await knex('users').del();
-
-  // Inserts seed entries
-  await knex('users').insert([
-    { name: 'Alice', email: 'alice@example.com' },
-    { name: 'Bob', email: 'bob@example.com' },
-  ]);
-};
-
-This file first deletes any existing entries in the users table and then inserts two new users.
-
-Step 3: Run the Seed File
-
-To run the seeds and populate your database, use the following command:
-
-``` knex seed:run --knexfile src/db/knexfile.ts --env development ```
-
-9. Using Transactions (Optional)
-
-If you need to perform multiple database operations that should be treated as a single unit (i.e., all succeed or all fail), you can use transactions in Knex.
-
-import db from '../db';
-
-async function transferFunds(senderUserId: number, receiverUserId: number, amount: number) {
-  const trx = await db.transaction();
-
-  try {
-    // Deduct amount from sender
-    await trx('users').where('id', senderUserId).decrement('balance', amount);
-
-    // Add amount to receiver
-    await trx('users').where('id', receiverUserId).increment('balance', amount);
-
-    // Commit the transaction
-    await trx.commit();
-  } catch (error) {
-    // Rollback the transaction on error
-    await trx.rollback();
-    throw error;
-  }
-}
-
-10. Adding Unit Tests for Knex Queries
-
-You can test your database queries and migrations using a testing framework like Jest. Here’s an example of how to set up a basic test for your Knex database interactions.
-
-Step 1: Install Testing Libraries
-
-If you haven’t already, install Jest and any additional testing libraries you need:
-
-``` npm install --save-dev jest ts-jest @types/jest ```
-
-Step 2: Configure Jest
-
-Create a Jest configuration file jest.config.js:
-
-module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  setupFilesAfterEnv: ['./src/setupTests.ts'],
-};
-
-Step 3: Set Up the Test Environment
-
-You may want to create a test database and configure your tests to use it. Create a setupTests.ts file:
-
-import db from './db';
-
-beforeAll(async () => {
-  // Set up the test database
-  await db.migrate.latest(); // Run migrations for the test database
-});
-
-afterAll(async () => {
-  // Clean up
-  await db.destroy(); // Close the database connection
-});
-
-Step 4: Write a Unit Test
-
-Create a test file for your users, e.g., src/__tests__/userController.test.ts:
-
-import { createUser, getUsers } from '../controllers/userController';
-import db from '../db';
-
-describe('User Controller', () => {
-  beforeEach(async () => {
-    await db('users').del(); // Clear users before each test
-  });
-
-  it('should create a user and retrieve it', async () => {
-    await createUser('Alice', 'alice@example.com');
-    const users = await getUsers();
-
-    expect(users.length).toBe(1);
-    expect(users[0].name).toBe('Alice');
-  });
-});
-
-Step 5: Run Your Tests
-
-You can now run your tests using the Jest command:
-
-``` npx jest ```
-
-
-
-### Working Assumptions
-1) One currency
-2) User's BVN validation and other KYC is handled
+Working Assumptions
+- One currency
+- User BVN verification and Other KYC is handled
