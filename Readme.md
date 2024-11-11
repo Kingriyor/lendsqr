@@ -57,11 +57,7 @@ cd lendsqr_wallet
 npm install
 
 
-	3.	Configure environment variables by creating a .env file based on .env.example:
-
-PORT=4000
-DATABASE_URL=your_database_url
-ADJUTOR_KARMA_API_KEY=your_adjutor_api_key
+	3.	Configure environment variables by creating a .env file based on sample.env:
 
 
 	4.	Set up the database by running migrations:
@@ -165,7 +161,7 @@ Contributing
 
 
 TODOs
-- names should be diviided into first, middle and Surname
+- Name should be diviided into first, middle and Surname
 - A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
 - Debug and complete tests
 - E-R Diagram
