@@ -8,22 +8,17 @@ import { ApiResponse } from '../models/ApiResponse';
 const userService = new UserService();
 const transactionsService = new TransactionService();
 
-// TODO A user with records in the Lendsqr Adjutor Karma blacklist should never be onboarded
-// TODO tests
-// TODO readme and documentation
-// TODO E-R Diagram
-
 export class UserController{
 
   public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const { name, email } = req.body;
-      await userService.createUser(name, email);
+      const [user] = await userService.createUser(name, email);
 
-      const response: ApiResponse<null> = {
+      const response: ApiResponse<typeof user> = {
         success: true,
         message: 'User Created',
-        data: null,
+        data: user,
         error: ""
       };
       res.status(201).json(response);
@@ -150,8 +145,8 @@ export class UserController{
   public async deleteUser(req: Request, res: Response): Promise<void>{
     const { id } = req.params;
     try {
-        const deleted = await userService.deleteUser(parseInt(id));
-        if (!deleted) {
+        const [deleted] = await userService.deleteUser(parseInt(id));
+        if (!deleted || deleted.length == 0) {
             const response: ApiResponse<null> = {
               success: false,
               message: 'User not found',
@@ -160,10 +155,10 @@ export class UserController{
             };
             res.status(404).json(response);
         }else{
-          const response: ApiResponse<null> = {
+          const response: ApiResponse<typeof deleted> = {
             success: true,
             message: 'User Deleted',
-            data: null,
+            data: deleted,
             error: ""
           };
           res.status(200).json(response);
@@ -182,12 +177,12 @@ export class UserController{
   public async transferFunds(req: Request, res: Response): Promise<void> {
     try {
       const { senderUserId, receiverUserId, amount } = req.body;
-      if (!senderUserId || !receiverUserId || !amount || amount <= 0) {
+      if (!senderUserId || !receiverUserId || !amount || amount <= 0 || senderUserId == receiverUserId) {
         const response: ApiResponse<null> = {
           success: false,
           message: 'Invalid input',
           data: null,
-          error: "",
+          error: "Enter senderUserId, receiverUserId and amount where senderUserId != receiverUserId",
         };
         res.status(400).json(response);
       }else{
@@ -221,7 +216,7 @@ export class UserController{
           success: false,
           message: 'Invalid input',
           data: null,
-          error: "",
+          error: "Enter userId and amount",
         };
         res.status(400).json(response);
       }else{
@@ -255,7 +250,7 @@ export class UserController{
           success: false,
           message: 'Invalid input',
           data: null,
-          error: "",
+          error: "Enter userId and amount",
         };
         res.status(400).json(response);
       }else{
