@@ -7,10 +7,9 @@ export const seed = async (knex: Knex): Promise<void> => {
 
   // Inserts seed entries
   await knex('users').insert([
-    { name: 'Alice', email: 'alice@example.com' },
-    { name: 'Bob', email: 'bob@example.com' },
+    { name: 'Alice Doe', email: 'alice@example.com', bvn: '31234567890', activated: 1, account_balance: 100 },
+    { name: 'Bob Doe', email: 'bob@example.com', bvn: '41234567890', activated: 1, account_balance: 100 },
     {
-      id: 44691,
       name: 'Ado John Sule',
       phone_number: '07062569817',
       email: 'Ado@lendsqr.com',
@@ -23,9 +22,7 @@ export const seed = async (knex: Knex): Promise<void> => {
       account_balance: 1144.25,
       activated: 1,
       activated_on: '2021-02-01T10:15:08.000Z',
-      blacklisted: 0,
-      created_on: '2021-02-01T11:02:00.000Z',
-      modified_on: '2023-10-02T23:20:36.000Z'
+      blacklisted: 0
   }
   ]);
 };
