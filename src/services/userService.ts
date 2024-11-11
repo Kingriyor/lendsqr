@@ -12,7 +12,6 @@ export class UserService{
         return users;
     }
 
-    
     public async getUserById(id: number) {
         const user = await db<User>('users').where({ id }).first();
         return user;
@@ -27,6 +26,5 @@ export class UserService{
         const user = await db('users').where({ id }).del().returning('*');;
         return user;
     }
-    
 
 }
